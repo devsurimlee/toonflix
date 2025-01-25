@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toonflix/screen/HomeScreen.dart';
+import 'package:toonflix/screen/homeScreen.dart';
 
 void main() {
   runApp(const App());
