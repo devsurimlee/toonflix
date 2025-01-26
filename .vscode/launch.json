@@ -16,10 +16,10 @@
             "type": "dart"
         },
         {
-            "name": "toonflix (profile mode)",
+            "name": "toonflix (debug mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "debug"
         },
         {
             "name": "toonflix (release mode)",
