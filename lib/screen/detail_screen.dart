@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:toonflix/models/webtoon_detail.dart';
+import 'package:toonflix/models/webtoon_episode_model.dart';
+import 'package:toonflix/services/api_service.dart';
 
 /// 웹툰 상세화면
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final String title;
   final String thumb;
   final String id;
@@ -15,6 +18,21 @@ class DetailScreen extends StatelessWidget {
   });
 
   @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  late Future<WebtoonDetailModel> webtoonDetail;
+  late Future<List<WebtoonEpisodeModel>> webtoonEpisodes;
+
+  @override
+  void initState() {
+    super.initState();
+    webtoonDetail = ApiService.getWebtoonById(widget.id);
+    webtoonEpisodes = ApiService.getEpisodes(widget.id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -24,7 +42,7 @@ class DetailScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.green,
         title: Text(
-          title,
+          widget.title,
           style: TextStyle(
             fontSize: 24,
           ),
@@ -39,7 +57,7 @@ class DetailScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Hero(
-                tag: id,
+                tag: widget.id,
                 child: Container(
                   width: 250,
                   clipBehavior: Clip.hardEdge,
@@ -54,7 +72,7 @@ class DetailScreen extends StatelessWidget {
                     ],
                   ),
                   child: Image.network(
-                    thumb,
+                    widget.thumb,
                     headers: const {
                       'Referer': 'https://comix.naver.com',
                     },
