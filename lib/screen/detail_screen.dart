@@ -22,14 +22,14 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  late Future<WebtoonDetailModel> webtoonDetail;
-  late Future<List<WebtoonEpisodeModel>> webtoonEpisodes;
+  late Future<WebtoonDetailModel> detail;
+  late Future<List<WebtoonEpisodeModel>> episodes;
 
   @override
   void initState() {
     super.initState();
-    webtoonDetail = ApiService.getWebtoonById(widget.id);
-    webtoonEpisodes = ApiService.getEpisodes(widget.id);
+    detail = ApiService.getWebtoonById(widget.id);
+    episodes = ApiService.getEpisodes(widget.id);
   }
 
   @override
@@ -66,7 +66,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     boxShadow: [
                       BoxShadow(
                         blurRadius: 15,
-                        color: Colors.black54,
+                        color: Colors.black38,
                         offset: Offset(10, 10),
                       )
                     ],
@@ -80,6 +80,43 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               ),
             ],
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          FutureBuilder(
+            future: detail,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${snapshot.data!.genre} / ${snapshot.data!.age}',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        snapshot.data!.about,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return Text('...');
+              }
+            },
           ),
         ],
       ),
